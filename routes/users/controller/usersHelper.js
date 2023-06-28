@@ -14,9 +14,12 @@ const createUser = (params) => {
 const hashPassword = (password) => {
     let hashedPassword = bcrypt.hash(password, saltRounds)
     return hashedPassword
-    
+
     // or
     // return bcrypt.hash(password, saltRounds)
 }
 
-module.exports = { createUser, hashPassword }
+const comparePasswords = (plaintextPassword, dbPassword) => bcrypt.compare(plaintextPassword, dbPassword)
+
+
+module.exports = { createUser, hashPassword, comparePasswords }
