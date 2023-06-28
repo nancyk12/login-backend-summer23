@@ -21,7 +21,8 @@ module.exports = {
 
             if (req.body.password !== 'abc'){
                 throw {
-                    status: 403
+                    status: 403,
+                    message: "Invalid Password"
                 }
             }
             res.status(200).json({
@@ -30,7 +31,7 @@ module.exports = {
                 message: "Successful Login!!"
             })  
         } catch (error) {
-            res.status(error.status).json('Error!!')
+            res.status(error.status).json(error.message)
         }
     },
     register: async (req, res) => {
