@@ -13,8 +13,10 @@ router.get('/login-test', function(req, res) {
   })
 })
 
-router.get('/login', usersController.login)
+router.post('/login', usersController.login)
 
+//add route for register
+router.post('/register', usersController.register)
 
 
 module.exports = router;
