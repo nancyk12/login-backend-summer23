@@ -5,9 +5,13 @@ const verifyToken = async (req, res, next) => {
     try {
         const bearerToken = req.headers.authorization
         if (bearerToken) {
-
-
+            console.log(bearerToken)
+            const token = bearerToken.split(' ')[1]
+            let decoded = jwt.verify(token, process.env.SUPER_SECRET_KEY)
+            console.log('!@-------decoded-------@!')
+            console.log(decoded)
             
+
             next()  
         } else {
             throw {
