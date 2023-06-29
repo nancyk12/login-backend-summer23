@@ -1,4 +1,5 @@
 const User = require('../model/User')
+const jwt = require('jsonwebtoken')
 const { createUser, hashPassword, comparePasswords } = require('./usersHelper')
 
 module.exports = {
@@ -23,11 +24,18 @@ module.exports = {
                     message: "Invalid Password"
                 }
             }
-   
+            // console.log(foundUser)
+            let payload = {
+                id: foundUser._id,
+                username: foundUser.username
+            }
+
+            let token = await jwt.sign(payload, process.env.SUPER_SECRET_KEY, {expiresIn: 5*60})
+
             res.status(200).json({
                 username: req.body.username,
-                password: req.body.password,
-                message: "Successful Login!!"
+                message: "Successful Login!!",
+                token: token
             })  
         } catch (error) {
             res.status(error.status).json(error.message)
