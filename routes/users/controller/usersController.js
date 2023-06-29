@@ -31,7 +31,7 @@ module.exports = {
             }
 
             let token = await jwt.sign(payload, process.env.SUPER_SECRET_KEY, {expiresIn: 5*60})
-
+            
             res.status(200).json({
                 username: req.body.username,
                 message: "Successful Login!!",
@@ -72,6 +72,17 @@ module.exports = {
             res.status(error.status).json(error.message)
         }
         
+    },
+    authtoken: async (req, res) => {
+        
+        let foundUser = await User.findOne({username: req.body.username})
+
+        res.status(200).json({
+            username: req.body.username,
+            message: "Successful Login!!",
+            token: token
+        })
+
     }
     
 
