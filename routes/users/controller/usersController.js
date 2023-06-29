@@ -5,7 +5,7 @@ const { createUser, hashPassword, comparePasswords } = require('./usersHelper')
 module.exports = {
     login: async (req, res) => {
         try {
-            // console.log(req.body);
+            console.log(req.headers);
             
             //check if user exists / get the user form the db
             let foundUser = await User.findOne({username: req.body.username})
@@ -30,7 +30,7 @@ module.exports = {
                 username: foundUser.username
             }
 
-            let token = await jwt.sign(payload, process.env.SUPER_SECRET_KEY, {expiresIn: 5*60})
+            let token = await jwt.sign(payload, process.env.SUPER_SECRET_KEY, {expiresIn: 60*60})
             
             res.status(200).json({
                 username: req.body.username,
@@ -74,15 +74,31 @@ module.exports = {
         
     },
     authtoken: async (req, res) => {
+        console.log('!@-------req.decoded-------@!')
+        console.log(req.decoded)
         
-        // let foundUser = await User.findOne({username: req.body.username})
+        let foundUser = await User.findById(req.decoded.id)
 
+        // you can re-issue the token to reset the expiration,
+        // this isn't less secure, it is a design decision that can be less secure
+        //
+        // let payload = {
+        //     id: foundUser._id,
+        //     username: foundUser.username
+        // }
+        // let token = await jwt.sign(payload, process.env.SUPER_SECRET_KEY, {expiresIn: 5*60})
         // res.status(200).json({
-        //     username: req.body.username,
-        //     message: "Successful Login!!",
+        //     username: foundUser.username,
+        //     message: "Successful Token Login!!",
         //     token: token
         // })
-        res.send('Authtoken')
+
+
+        res.status(200).json({
+            username: foundUser.username,
+            message: "Successful Token Login!!"
+        })
+
 
     }
     
