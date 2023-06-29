@@ -75,13 +75,14 @@ module.exports = {
     },
     authtoken: async (req, res) => {
         
-        let foundUser = await User.findOne({username: req.body.username})
+        // let foundUser = await User.findOne({username: req.body.username})
 
-        res.status(200).json({
-            username: req.body.username,
-            message: "Successful Login!!",
-            token: token
-        })
+        // res.status(200).json({
+        //     username: req.body.username,
+        //     message: "Successful Login!!",
+        //     token: token
+        // })
+        res.send('Authtoken')
 
     }
     
