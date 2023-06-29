@@ -93,13 +93,22 @@ module.exports = {
         //     token: token
         // })
 
-
         res.status(200).json({
             username: foundUser.username,
             message: "Successful Token Login!!"
         })
 
 
+    },
+    deleteUser: async (req, res) => {
+        try {
+            let foundUser = await User.findByIdAndDelete(req.decoded.id)
+            // console.log(foundUser)
+            res.send(true)
+        } catch (error) {
+            res.send(false)
+        }
+        
     }
     
 

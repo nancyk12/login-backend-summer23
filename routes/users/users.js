@@ -23,5 +23,8 @@ router.post('/register', usersController.register)
 //route for token auth
 router.post('/authtoken', verifyToken, usersController.authtoken)
 
+//route for deleting the user
+router.post('/delete-user', verifyToken, usersController.deleteUser )
+
 
 module.exports = router;
